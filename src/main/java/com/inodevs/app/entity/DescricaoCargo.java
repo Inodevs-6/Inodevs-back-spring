@@ -21,15 +21,15 @@ public class DescricaoCargo {
 
     @Column(name = "desc_nivel")
     private String nivel;
+    
+    @Column(name = "desc_conhecimentos")
+    private String conhecimentos;
 
     @Column(name = "desc_habilidades")
     private String habilidades;
 
     @Column(name = "desc_atitudes")
     private String atitudes;
-
-    @Column(name = "desc_capacidades")
-    private String capacidades;
 
     public Long getId() {
         return this.id;
@@ -55,6 +55,13 @@ public class DescricaoCargo {
         this.nivel = nivel;
     }
 
+    public String getConhecimentos() {
+        return this.conhecimentos;
+    }
+
+    public void setConhecimentos(String conhecimentos) {
+        this.conhecimentos = conhecimentos;
+    }
 
     public String getHabilidades() {
         return this.habilidades;
@@ -70,14 +77,6 @@ public class DescricaoCargo {
 
     public void setAtitudes(String atitudes) {
         this.atitudes = atitudes;
-    }
-
-    public String getCapacidades() {
-        return this.capacidades;
-    }
-
-    public void setCapacidades(String capacidades) {
-        this.capacidades = capacidades;
     }
 
 }

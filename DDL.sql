@@ -14,9 +14,9 @@ create table desc_cargo (
     desc_id bigint unsigned not null auto_increment,
     desc_vaga varchar(50) not null,
     desc_nivel varchar(50) not null,
+    desc_conhecimentos text,
     desc_habilidades text,
     desc_atitudes text,
-    desc_capacidades text,
     primary key (desc_id)
 );
 
@@ -42,9 +42,9 @@ create table desc_cargo_edit (
     desc_edit_id bigint unsigned not null auto_increment,
     desc_edit_vaga varchar(50) not null,
     desc_edit_nivel varchar(20) not null,
+    desc_edit_conhecimentos text,
     desc_edit_habilidades text,
     desc_edit_atitudes text,
-    desc_edit_capacidades text,
     emp_id bigint unsigned not null,
     primary key (desc_edit_id),
     foreign key emp_cargo_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade
