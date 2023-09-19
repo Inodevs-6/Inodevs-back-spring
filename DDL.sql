@@ -1,27 +1,16 @@
-create schema if not exists inodevs;
+drop schema if exists inodevs;
+
+create schema inodevs;
+
+drop user if exists 'user'@'localhost';
+
+create user 'user'@'localhost' identified by 'pass123';
+
+grant select, insert, delete, update on inodevs.* to user@'localhost';
 
 use inodevs;
 
-create table if not exists desc_cargo (
-    desc_id bigint unsigned not null auto_increment,
-    desc_vaga varchar(50) not null,
-    desc_nivel varchar(20) not null,
-    desc_habilidades text,
-    desc_atitudes text,
-    desc_capacidades text,
-    primary key (desc_id)
-);
-
-create table if not exists candidato (
-    cand_id bigint unsigned not null auto_increment,
-    cand_experiencia text not null,
-    cand_contato varchar(50) not null,
-    cand_nome varchar(50) not null,
-    cand_pontos_cha int,
-    primary key (cand_id)
-);
-
-create table if not exists empresa (
+create table empresa (
     emp_id bigint unsigned not null auto_increment,
     emp_nome varchar(50) not null,
     emp_cnpj varchar(18) not null,
@@ -30,22 +19,38 @@ create table if not exists empresa (
     unique key (emp_cnpj)
 );
 
-create table if not exists desc_cargo_edit (
-    desc_edit_id bigint unsigned not null auto_increment,
-    desc_edit_vaga varchar(50) not null,
-    desc_edit_nivel varchar(20) not null,
-    desc_edit_habilidades text,
-    desc_edit_atitudes text,
-    desc_edit_capacidades text,
-    emp_id bigint unsigned not null,
-    primary key (desc_edit_id),
-    foreign key emp_cargo_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade
+create table vaga (
+    vaga_id bigint unsigned not null auto_increment,
+    vaga_nome varchar(50) not null,
+    vaga_nivel varchar(50) not null,
+    vaga_conhecimentos text,
+    vaga_habilidades text,
+    vaga_atitudes text,
+    primary key (vaga_id)
 );
 
-create table if not exists desc_cargo_candidato (
-  desc_id bigint unsigned not null,
-  cand_id bigint unsigned not null,
-  primary key (desc_id, cand_id),
-  foreign key cand_usuario_fk (desc_id) references desc_cargo (desc_id) on delete restrict on update cascade,
-  foreign key cand_candidato_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
+create table candidato (
+    cand_id bigint unsigned not null auto_increment,
+    cand_nome varchar(50) not null,
+    cand_experiencia text not null,
+    cand_contato varchar(50) not null,
+    primary key (cand_id)
+);
+
+create table empresa_vaga (
+    vaga_id bigint unsigned not null,
+    emp_id bigint unsigned not null,
+    primary key (emp_id, vaga_id),
+    foreign key vaga_emp_fk (vaga_id) references vaga (vaga_id) on delete restrict on update cascade,
+    foreign key emp_vaga_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade
+);
+
+create table candidato_vaga (
+    vaga_id bigint unsigned not null,
+    cand_id bigint unsigned not null,
+    cand_vaga_rank int not null,
+    cand_vaga_pontos_cha int not null,
+    primary key (vaga_id, cand_id),
+    foreign key vaga_cand_fk (vaga_id) references vaga (vaga_id) on delete restrict on update cascade,
+    foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
