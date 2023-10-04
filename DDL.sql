@@ -34,6 +34,7 @@ create table candidato (
     cand_nome varchar(50) not null,
     cand_experiencia text not null,
     cand_contato varchar(50) not null,
+    cand_match varchar(4) null,
     primary key (cand_id)
 );
 
