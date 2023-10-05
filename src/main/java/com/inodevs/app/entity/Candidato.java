@@ -15,18 +15,9 @@ public class Candidato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cand_id")
     private Long id;
-
-    @Column(name = "cand_nome")
-    private String nome;
-
-    @Column(name = "cand_experiencia")
-    private String experiencia;
     
-    @Column(name = "cand_contato")
-    private String contato;
-
-    @Column(name = "cand_match")
-    private String match;
+    @Column(name = "cand_link")
+    private String link;
 
     public Long getId() {
         return id;
@@ -36,36 +27,12 @@ public class Candidato {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getLink() {
+        return link;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getExperiencia() {
-        return experiencia;
-    }
-
-    public void setExperiencia(String experiencia) {
-        this.experiencia = experiencia;
-    }
-
-    public String getContato() {
-        return contato;
-    }
-
-    public void setContato(String contato) {
-        this.contato = contato;
-    }
-
-    public String getMatch() {
-        return match;
-    }
-
-    public void setMatch(String match) {
-        this.match = match;
+    public void setLink(String link) {
+        this.link = link;
     }
 
 }
