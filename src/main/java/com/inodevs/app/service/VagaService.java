@@ -2,9 +2,11 @@ package com.inodevs.app.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inodevs.app.entity.Vaga;
 import com.inodevs.app.repository.VagaRepository;
+
 
 @Service
 public class VagaService {
@@ -12,6 +14,7 @@ public class VagaService {
     @Autowired
     private VagaRepository vagaRepository;
 
+    @Transactional
     public Vaga novaVaga (Vaga vaga) {
         
         if(vaga == null ||

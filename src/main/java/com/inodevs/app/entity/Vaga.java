@@ -1,10 +1,15 @@
 package com.inodevs.app.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +35,13 @@ public class Vaga {
 
     @Column(name = "vaga_atitudes")
     private String atitudes;
+
+    @ManyToMany
+    @JoinTable(name = "candidato_vaga",
+    joinColumns = {@JoinColumn(name = "vaga_id")},
+    inverseJoinColumns = {@JoinColumn(name = "cand_id")})
+    private List<Candidato> candidato;
+
 
     public Long getId() {
         return this.id;
