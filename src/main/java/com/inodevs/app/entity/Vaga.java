@@ -7,9 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,12 +34,18 @@ public class Vaga {
     @Column(name = "vaga_atitudes")
     private String atitudes;
 
-    @ManyToMany
-    @JoinTable(name = "candidato_vaga",
-    joinColumns = {@JoinColumn(name = "vaga_id")},
-    inverseJoinColumns = {@JoinColumn(name = "cand_id")})
-    private List<Candidato> candidato;
+    @OneToMany(mappedBy = "vaga")
+    private List<CandidatoVaga> candidatos;
 
+    public Vaga() {}
+
+    public Vaga(String nome, String nivel, String conhecimentos, String habilidades, String atitudes) {
+        this.nome = nome;
+        this.nivel = nivel;
+        this.conhecimentos = conhecimentos;
+        this.habilidades = habilidades;
+        this.atitudes = atitudes;
+    }
 
     public Long getId() {
         return this.id;
@@ -89,6 +93,14 @@ public class Vaga {
 
     public void setAtitudes(String atitudes) {
         this.atitudes = atitudes;
+    }
+
+    public List<CandidatoVaga> getCandidatos() {
+        return this.candidatos;
+    }
+
+    public void setCandidatos(List<CandidatoVaga> candidatos) {
+        this.candidatos = candidatos;
     }
 
 }

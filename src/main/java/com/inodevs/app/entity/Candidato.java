@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,27 +21,54 @@ public class Candidato {
     @Column(name = "cand_id")
     private Long id;
     
+    @Column(name = "cand_exp")
+    private String experiencia;
+
     @Column(name = "cand_link")
     private String link;
 
-    @ManyToMany(mappedBy = "candidato")
+    @OneToMany(mappedBy = "candidato")
     @JsonIgnore
-    private List<Vaga> vaga;
+    private List<CandidatoVaga> vagas;
+
+    public Candidato() {
+    }
+
+    public Candidato(String experiencia, String link) {
+        this.experiencia = experiencia;
+        this.link = link;
+    }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getExperiencia() {
+        return this.experiencia;
+    }
+
+    public void setExperiencia(String experiencia) {
+        this.experiencia = experiencia;
+    }
+
     public String getLink() {
-        return link;
+        return this.link;
     }
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public List<CandidatoVaga> getVagas() {
+        return this.vagas;
+    }
+
+    public void setVagas(List<CandidatoVaga> vagas) {
+        this.vagas = vagas;
     }
 
 }

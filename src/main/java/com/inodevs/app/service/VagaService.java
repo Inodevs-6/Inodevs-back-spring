@@ -1,11 +1,10 @@
 package com.inodevs.app.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.inodevs.app.entity.Candidato;
 import com.inodevs.app.entity.Vaga;
 import com.inodevs.app.repository.VagaRepository;
 
@@ -14,7 +13,7 @@ import com.inodevs.app.repository.VagaRepository;
 public class VagaService {
     
     @Autowired
-    private VagaRepository vagaRepository;
+    private VagaRepository vagaRepo;
 
     public Vaga novaVaga (Vaga vaga) {
         
@@ -25,12 +24,15 @@ public class VagaService {
                 vaga.getNivel().isBlank()) {
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }
-        return vagaRepository.save(vaga);        
+        return vagaRepo.save(vaga);        
     }
 
-    public List<Candidato> buscarCandidatoVaga(Long id) {
-        return vagaRepository.findByCandidatoVagas(id);
+    public Vaga buscarCandidatosPorVaga(Long id) {
+        Optional<Vaga> vagaOp = vagaRepo.findById(id);
+        if(vagaOp.isEmpty()) {
+            throw new IllegalArgumentException("Vaga não encontrada!");
+        }
+        return vagaOp.get();
     }
-
 
 }
