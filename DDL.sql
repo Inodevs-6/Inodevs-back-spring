@@ -39,6 +39,9 @@ create table candidato (
 create table empresa_vaga (
     vaga_id bigint unsigned not null,
     emp_id bigint unsigned not null,
+    vaga_conhecimentos_editada text,
+    vaga_habilidades_editada text,
+    vaga_atitudes_editada text,
     primary key (emp_id, vaga_id),
     foreign key vaga_emp_fk (vaga_id) references vaga (vaga_id) on delete restrict on update cascade,
     foreign key emp_vaga_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade
