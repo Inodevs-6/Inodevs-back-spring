@@ -1,6 +1,7 @@
 package com.inodevs.app.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,17 @@ public class VagaService {
             return vagaRepository.findAll();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao listar as Vagas!");
+        }
+    }
+
+    public Optional<Vaga> buscarVagasPorNome(String nome) {
+        try {
+            if (nome == null || nome.isBlank()) {
+                throw new IllegalArgumentException("O nome da vaga não pode ser vazio!");
+            }
+            return vagaRepository.findByNomeContaining(nome);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as Vagas por nome!");
         }
     }
 
