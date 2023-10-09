@@ -19,11 +19,6 @@ import jakarta.persistence.Table;
 public class EmpresaVaga {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "emp_id")
-    private Long id;
-
-    @Id
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "vaga_id")
