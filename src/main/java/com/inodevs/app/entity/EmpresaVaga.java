@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,7 +15,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "empresa_vaga")
 public class EmpresaVaga {
-
     @Id
     @ManyToOne
     @JsonIgnore
@@ -47,14 +44,6 @@ public class EmpresaVaga {
         this.conhecimentos_editado = conhecimentos_editado;
         this.habilidades_editado = habilidades_editado;
         this.atitudes_editado  = atitudes_editado;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getConhecimentosEditado() {
