@@ -34,7 +34,7 @@ public class VagaController {
     }
 
     @GetMapping(value = "/{nome}")
-    public Optional<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
+    public List<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
         return vagaService.buscarVagasPorNome(nome);
     }
 }

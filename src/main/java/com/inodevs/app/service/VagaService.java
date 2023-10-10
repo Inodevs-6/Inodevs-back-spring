@@ -38,7 +38,7 @@ public class VagaService {
         }
     }
 
-    public Optional<Vaga> buscarVagasPorNome(String nome) {
+    public List<Vaga> buscarVagasPorNome(String nome) {
         try {
             if (nome == null || nome.isBlank()) {
                 throw new IllegalArgumentException("O nome da vaga não pode ser vazio!");
