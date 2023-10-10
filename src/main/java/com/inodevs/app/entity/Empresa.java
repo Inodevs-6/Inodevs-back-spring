@@ -32,7 +32,7 @@ public class Empresa {
 
     @OneToMany(mappedBy = "empresa")
     @JsonIgnore
-    private List<Empresa> empresa;
+    private List<EmpresaVaga> vagas;
 
     public Empresa() {
     }
@@ -67,12 +67,12 @@ public class Empresa {
         this.emp_descricao = emp_descricao;
     }
 
-    public List<Empresa> getEmpresa() {
-        return this.empresa;
+    public List<EmpresaVaga> getVagas() {
+        return vagas;
     }
 
-    public void setEmpresa(List<Empresa> empresa) {
-        this.empresa = empresa;
+    public void setVagas(List<EmpresaVaga> vagas) {
+        this.vagas = vagas;
     }
 
 }

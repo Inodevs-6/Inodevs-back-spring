@@ -37,6 +37,9 @@ public class Vaga {
     @OneToMany(mappedBy = "vaga")
     private List<CandidatoVaga> candidatos;
 
+    @OneToMany(mappedBy = "vaga")
+    private List<EmpresaVaga> empresas;
+
     public Vaga() {}
 
     public Vaga(String nome, String nivel, String conhecimentos, String habilidades, String atitudes) {
