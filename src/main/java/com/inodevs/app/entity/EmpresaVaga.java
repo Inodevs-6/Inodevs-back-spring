@@ -30,10 +30,10 @@ public class EmpresaVaga {
     @Column(name="vaga_conhecimentos_editada")
     private String conhecimentos_editado;
 
-     @Column(name="vaga_habilidades_editada")
+    @Column(name="vaga_habilidades_editada")
     private String habilidades_editado;
 
-     @Column(name="vaga_atitudes_editada")
+    @Column(name="vaga_atitudes_editada")
     private String atitudes_editado;
 
     public Vaga getVaga() {

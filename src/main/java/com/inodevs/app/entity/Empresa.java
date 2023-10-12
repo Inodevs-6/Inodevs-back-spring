@@ -44,26 +44,34 @@ public class Empresa {
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getExperiencia() {
-        return this.emp_nome;
+    public String getEmp_nome() {
+        return emp_nome;
     }
 
-    public void setExperiencia(String emp_cnpj) {
+    public void setEmp_nome(String emp_nome) {
+        this.emp_nome = emp_nome;
+    }
+
+    public String getEmp_cnpj() {
+        return emp_cnpj;
+    }
+
+    public void setEmp_cnpj(String emp_cnpj) {
         this.emp_cnpj = emp_cnpj;
     }
 
-    public String getDescricao() {
-        return this.emp_descricao;
+    public String getEmp_descricao() {
+        return emp_descricao;
     }
 
-    public void setDescricao(String emp_descricao) {
+    public void setEmp_descricao(String emp_descricao) {
         this.emp_descricao = emp_descricao;
     }
 
