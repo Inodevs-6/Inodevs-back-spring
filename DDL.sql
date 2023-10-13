@@ -57,3 +57,6 @@ create table candidato_vaga (
     foreign key vaga_cand_fk (vaga_id) references vaga (vaga_id) on delete restrict on update cascade,
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
+
+insert into empresa (emp_nome, emp_cnpj, emp_descricao)
+	values ('teste', 235547456, 'uma descricao');

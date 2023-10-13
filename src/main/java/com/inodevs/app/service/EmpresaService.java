@@ -15,9 +15,9 @@ public class EmpresaService {
     public Empresa novaEmpresa (Empresa empresa) {
         
         if(empresa == null ||
-                empresa.getEmp_nome() == null ||
-                empresa.getEmp_cnpj() == null ||
-                empresa.getEmp_descricao() == null ) {
+                empresa.getNome() == null ||
+                empresa.getCnpj() == null ||
+                empresa.getDescricao() == null ) {
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }
         return empresaRepo.save(empresa);        

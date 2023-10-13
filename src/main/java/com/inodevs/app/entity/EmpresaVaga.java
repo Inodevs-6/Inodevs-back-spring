@@ -26,7 +26,7 @@ public class EmpresaVaga {
     @ManyToOne
     @JoinColumn(name = "emp_id")
     private Empresa empresa;
-    
+
     @Column(name="vaga_conhecimentos_editada")
     private String conhecimentos_editado;
 
@@ -35,6 +35,15 @@ public class EmpresaVaga {
 
     @Column(name="vaga_atitudes_editada")
     private String atitudes_editado;
+
+    public EmpresaVaga(Vaga vaga, Empresa empresa) {
+    this.vaga = vaga;
+    this.empresa = empresa;
+    }
+
+    public EmpresaVaga(){
+
+    }
 
     public Vaga getVaga() {
         return this.vaga;
@@ -69,7 +78,7 @@ public class EmpresaVaga {
     }
 
     public String getHabilidadesEditado() {
-        return this.atitudes_editado;
+        return this.habilidades_editado;
     }
 
     public void setHabilidadesEditado(String habilidades_editado) {

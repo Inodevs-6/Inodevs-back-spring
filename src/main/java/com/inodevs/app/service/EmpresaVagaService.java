@@ -2,8 +2,13 @@ package com.inodevs.app.service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.inodevs.app.entity.EmpresaVaga;
+import com.inodevs.app.entity.Vaga;
+import com.inodevs.app.entity.Empresa;
 import com.inodevs.app.repository.EmpresaVagaRepository;
+import com.inodevs.app.repository.EmpresaRepository;
+import com.inodevs.app.repository.VagaRepository;
 
 @Service
 public class EmpresaVagaService {
@@ -11,14 +16,40 @@ public class EmpresaVagaService {
     @Autowired
     private EmpresaVagaRepository empresaVagaRepo;
 
-    public EmpresaVaga editarVaga (EmpresaVaga empresa_vaga) {
+    @Autowired
+    private EmpresaRepository empresaRepo;
+
+    @Autowired
+    private VagaRepository vagaRepo;
+
+    public EmpresaVaga editarVaga(Long emp_id, Long vaga_id, Vaga vagas) {
         
-        if( empresa_vaga.getConhecimentosEditado() == null &&
-            empresa_vaga.getHabilidadesEditado() == null &&
-            empresa_vaga.getAtitudesEditado() == null) {
-            throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
+        Optional<EmpresaVaga> empresaVagas = empresaVagaRepo.findByEmpresaIdAndVagaId(emp_id, vaga_id);
+
+        if (empresaVagas.isEmpty()) {
+
+            System.out.println(emp_id);
+
+            Optional<Empresa> empresa = empresaRepo.findById(emp_id);
+
+            System.out.println(empresa);
+
+            Optional<Vaga> vaga = vagaRepo.findById(vaga_id);
+
+            EmpresaVaga empresaVaga = new EmpresaVaga(vaga.get(), empresa.get());
+        
+            empresaVaga.setConhecimentosEditado(vagas.getConhecimentos());
+            empresaVaga.setHabilidadesEditado(vagas.getHabilidades());
+            empresaVaga.setAtitudesEditado(vagas.getAtitudes());
+
+            return empresaVagaRepo.save(empresaVaga);    
         }
-        return empresaVagaRepo.save(empresa_vaga);        
+
+        empresaVagas.get().setConhecimentosEditado(vagas.getConhecimentos());
+        empresaVagas.get().setHabilidadesEditado(vagas.getHabilidades());
+        empresaVagas.get().setAtitudesEditado(vagas.getAtitudes());
+
+        return empresaVagaRepo.save(empresaVagas.get());  
     }
 
     public EmpresaVaga buscarCandidatosPorVagaEditada(Long id) {

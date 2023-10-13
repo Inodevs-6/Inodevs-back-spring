@@ -20,28 +20,19 @@ public class Empresa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
     private Long id;
-    
+
     @Column(name = "emp_nome")
-    private String emp_nome;
+    private String nome;
 
     @Column(name = "emp_cnpj")
-    private String emp_cnpj;
+    private String cnpj;
 
     @Column(name = "emp_descricao")
-    private String emp_descricao;
+    private String descricao;
 
     @OneToMany(mappedBy = "empresa")
     @JsonIgnore
     private List<EmpresaVaga> vagas;
-
-    public Empresa() {
-    }
-
-    public Empresa(String emp_nome, String emp_cnpj, String emp_descricao) {
-        this.emp_nome = emp_nome;
-        this.emp_cnpj = emp_cnpj;
-        this.emp_descricao = emp_descricao;
-    }
 
     public Long getId() {
         return id;
@@ -51,28 +42,28 @@ public class Empresa {
         this.id = id;
     }
 
-    public String getEmp_nome() {
-        return emp_nome;
+    public String getNome() {
+        return nome;
     }
 
-    public void setEmp_nome(String emp_nome) {
-        this.emp_nome = emp_nome;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getEmp_cnpj() {
-        return emp_cnpj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setEmp_cnpj(String emp_cnpj) {
-        this.emp_cnpj = emp_cnpj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
-    public String getEmp_descricao() {
-        return emp_descricao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setEmp_descricao(String emp_descricao) {
-        this.emp_descricao = emp_descricao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public List<EmpresaVaga> getVagas() {
@@ -83,4 +74,14 @@ public class Empresa {
         this.vagas = vagas;
     }
 
+    public Empresa(String nome, String cnpj, String descricao, List<EmpresaVaga> vagas) {
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.descricao = descricao;
+        this.vagas = vagas;
+    }
+    
+    public Empresa(){
+        
+    }
 }

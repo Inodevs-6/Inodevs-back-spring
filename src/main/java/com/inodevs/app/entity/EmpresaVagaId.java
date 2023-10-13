@@ -3,6 +3,7 @@ package com.inodevs.app.entity;
 public class EmpresaVagaId {
     
     private Long empresa;
+    
     private Long vaga;
 
     public Long getEmpresa() {
