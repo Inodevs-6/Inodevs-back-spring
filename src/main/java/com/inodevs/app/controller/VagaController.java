@@ -1,5 +1,8 @@
 package com.inodevs.app.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,4 +33,14 @@ public class VagaController {
         return vagaService.buscarCandidatosPorVaga(id);
     }
 
+    @GetMapping
+    public List<Vaga> todosVagas() {
+        return vagaService.buscarTodosVagas();
+    }
+
+    @GetMapping(value = "/{nome}")
+    public List<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
+        return vagaService.buscarVagasPorNome(nome);
+    }
+  
 }
