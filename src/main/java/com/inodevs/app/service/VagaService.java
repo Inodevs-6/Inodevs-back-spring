@@ -41,7 +41,7 @@ public class VagaService {
 
     public List<Vaga> buscarTodosVagas() {
         try {
-            return vagaRepository.findAll();
+            return vagaRepo.findAll();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao listar as Vagas!");
         }
@@ -52,7 +52,7 @@ public class VagaService {
             if (nome == null || nome.isBlank()) {
                 throw new IllegalArgumentException("O nome da vaga não pode ser vazio!");
             }
-            return vagaRepository.findByNomeContaining(nome);
+            return vagaRepo.findByNomeContaining(nome);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as Vagas por nome!");
         }
