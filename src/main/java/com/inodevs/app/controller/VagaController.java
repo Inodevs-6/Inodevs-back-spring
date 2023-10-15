@@ -28,6 +28,11 @@ public class VagaController {
         return vagaService.novaVaga(vaga);
     }
 
+    @GetMapping(value = "/match/{id}")
+    public Vaga buscarPorVaga(@PathVariable("id") Long id) {
+        return vagaService.buscarCandidatosPorVaga(id);
+    }
+
     @GetMapping
     public List<Vaga> todosVagas() {
         return vagaService.buscarTodosVagas();
@@ -37,4 +42,5 @@ public class VagaController {
     public List<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
         return vagaService.buscarVagasPorNome(nome);
     }
+  
 }

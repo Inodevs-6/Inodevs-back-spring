@@ -31,9 +31,8 @@ create table vaga (
 
 create table candidato (
     cand_id bigint unsigned not null auto_increment,
-    cand_nome varchar(50) not null,
-    cand_experiencia text not null,
-    cand_contato varchar(50) not null,
+    cand_exp text not null,
+    cand_link varchar(50) not null,
     primary key (cand_id)
 );
 
@@ -50,6 +49,7 @@ create table candidato_vaga (
     cand_id bigint unsigned not null,
     cand_vaga_rank int not null,
     cand_vaga_pontos_cha int not null,
+    cand_percent_match float,
     primary key (vaga_id, cand_id),
     foreign key vaga_cand_fk (vaga_id) references vaga (vaga_id) on delete restrict on update cascade,
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade

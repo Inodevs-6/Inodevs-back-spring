@@ -11,11 +11,12 @@ import org.springframework.web.server.ResponseStatusException;
 import com.inodevs.app.entity.Vaga;
 import com.inodevs.app.repository.VagaRepository;
 
+
 @Service
 public class VagaService {
 
     @Autowired
-    private VagaRepository vagaRepository;
+    private VagaRepository vagaRepo;
 
     public Vaga novaVaga(Vaga vaga) {
 
@@ -26,8 +27,16 @@ public class VagaService {
                 vaga.getNivel().isBlank()) {
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }
-        return vagaRepository.save(vaga);
 
+        return vagaRepo.save(vaga);        
+    }
+
+    public Vaga buscarCandidatosPorVaga(Long id) {
+        Optional<Vaga> vagaOp = vagaRepo.findById(id);
+        if(vagaOp.isEmpty()) {
+            throw new IllegalArgumentException("Vaga não encontrada!");
+        }
+        return vagaOp.get();
     }
 
     public List<Vaga> buscarTodosVagas() {
@@ -47,6 +56,7 @@ public class VagaService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as Vagas por nome!");
         }
+
     }
 
 }
