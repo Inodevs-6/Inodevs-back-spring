@@ -14,7 +14,9 @@ create table empresa (
     emp_id bigint unsigned not null auto_increment,
     emp_nome varchar(50) not null,
     emp_cnpj varchar(18) not null,
+    emp_email varchar(30) not null,
     emp_descricao text,
+    emp_senha varchar(150) not null,
     primary key (emp_id),
     unique key (emp_cnpj)
 );
@@ -58,5 +60,5 @@ create table candidato_vaga (
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
 
-insert into empresa (emp_nome, emp_cnpj, emp_descricao)
-	values ('teste', 235547456, 'uma descricao');
+insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha)
+	values ('teste', 235547456, 'email@teste.com', 'senha');

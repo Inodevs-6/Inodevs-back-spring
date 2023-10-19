@@ -27,8 +27,14 @@ public class Empresa {
     @Column(name = "emp_cnpj")
     private String cnpj;
 
+    @Column(name = "emp_email")
+    private String email;
+
     @Column(name = "emp_descricao")
     private String descricao;
+
+    @Column(name = "emp_senha")
+    private String senha;
 
     @OneToMany(mappedBy = "empresa")
     @JsonIgnore
@@ -58,12 +64,28 @@ public class Empresa {
         this.cnpj = cnpj;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public List<EmpresaVaga> getVagas() {
@@ -74,13 +96,15 @@ public class Empresa {
         this.vagas = vagas;
     }
 
-    public Empresa(String nome, String cnpj, String descricao, List<EmpresaVaga> vagas) {
+        public Empresa(Long id, String nome, String cnpj, String email, String descricao, String senha) {
+        this.id = id;
         this.nome = nome;
         this.cnpj = cnpj;
+        this.email = email;
         this.descricao = descricao;
-        this.vagas = vagas;
+        this.senha = senha;
     }
-    
+
     public Empresa(){
         
     }
