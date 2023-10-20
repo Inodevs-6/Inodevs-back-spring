@@ -2,8 +2,6 @@ package com.inodevs.app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +35,6 @@ public class Empresa {
     private String senha;
 
     @OneToMany(mappedBy = "empresa")
-    @JsonIgnore
     private List<EmpresaVaga> vagas;
 
     public Long getId() {
@@ -96,8 +93,7 @@ public class Empresa {
         this.vagas = vagas;
     }
 
-        public Empresa(Long id, String nome, String cnpj, String email, String descricao, String senha) {
-        this.id = id;
+    public Empresa(String nome, String cnpj, String email, String descricao, String senha) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
