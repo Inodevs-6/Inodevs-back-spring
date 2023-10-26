@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +35,20 @@ public class Empresa {
 
     @Column(name = "emp_senha")
     private String senha;
+
+    @Column(name = "emp_segmento")
+    private String segmento;
+
+    public enum Porte {
+        micro,
+        pequeno,
+        medio,
+        grande
+    }
+ 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "emp_porte")
+    private Porte porte;
 
     @OneToMany(mappedBy = "empresa")
     private List<EmpresaVaga> vagas;
@@ -85,20 +101,30 @@ public class Empresa {
         this.senha = senha;
     }
 
-    public List<EmpresaVaga> getVagas() {
-        return vagas;
+    public String getSegmento() {
+        return segmento;
     }
 
-    public void setVagas(List<EmpresaVaga> vagas) {
-        this.vagas = vagas;
+    public void setSegmento(String segmento) {
+        this.segmento = segmento;
     }
 
-    public Empresa(String nome, String cnpj, String email, String descricao, String senha) {
+    public Porte getPorte() {
+        return porte;
+    }
+
+    public void setPorte(Porte porte) {
+        this.porte = porte;
+    }
+
+    public Empresa(String nome, String cnpj, String email, String descricao, String senha, String segmento, Porte porte) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
         this.descricao = descricao;
         this.senha = senha;
+        this.segmento = segmento;
+        this.porte = porte;
     }
 
     public Empresa(){

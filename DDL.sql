@@ -17,6 +17,8 @@ create table empresa (
     emp_email varchar(30) not null,
     emp_descricao text,
     emp_senha varchar(150) not null,
+    emp_segmento varchar(30) not null,
+    emp_porte enum('micro', 'pequeno', 'medio', 'grande') not null,
     primary key (emp_id),
     unique key (emp_cnpj)
 );
@@ -60,5 +62,5 @@ create table candidato_vaga (
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
 
-insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha)
-	values ('teste', 235547456, 'email@teste.com', 'senha');
+insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
+	values ('teste', 235547456, 'email@teste.com', 'senha', 'tecnologia', 'medio');
