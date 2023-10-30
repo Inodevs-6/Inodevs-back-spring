@@ -9,6 +9,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -52,6 +55,13 @@ public class Empresa {
 
     @OneToMany(mappedBy = "empresa")
     private List<EmpresaVaga> vagas;
+
+    @ManyToMany
+    @JoinTable(name = "uau_empresa_autorizacao",
+        joinColumns = { @JoinColumn(name = "emp_id")},
+        inverseJoinColumns = { @JoinColumn(name = "aut_id") }
+        )
+    private List<Autorizacao> autorizacoes;
 
     public Long getId() {
         return id;
@@ -117,7 +127,16 @@ public class Empresa {
         this.porte = porte;
     }
 
-    public Empresa(String nome, String cnpj, String email, String descricao, String senha, String segmento, Porte porte) {
+    public List<Autorizacao> getAutorizacoes() {
+        return autorizacoes;
+    }
+
+    public void setAutorizacoes(List<Autorizacao> autorizacoes) {
+        this.autorizacoes = autorizacoes;
+    }
+
+    public Empresa(String nome, String cnpj, String email, String descricao, String senha, String segmento, Porte porte,
+        List<Autorizacao> autorizacoes) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
@@ -125,6 +144,7 @@ public class Empresa {
         this.senha = senha;
         this.segmento = segmento;
         this.porte = porte;
+        this.autorizacoes = autorizacoes;
     }
 
     public Empresa(){

@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     public Optional<Empresa> findById(Long id);
+
+    public Optional<Empresa> findByEmail(String email);
 }

@@ -36,8 +36,23 @@ create table vaga (
 create table candidato (
     cand_id bigint unsigned not null auto_increment,
     cand_exp text not null,
-    cand_link varchar(50) not null,
+    cand_link varchar(100) not null,
     primary key (cand_id)
+);
+
+create table autorizacao (
+    aut_id bigint unsigned not null auto_increment,
+    aut_email varchar(100) not null,
+    primary key (aut_id),
+    unique key uni_aut_email (aut_email)
+);
+
+create table uau_empresa_autorizacao (
+  emp_id bigint unsigned not null,
+  aut_id bigint unsigned not null,
+  primary key (emp_id, aut_id),
+  foreign key aut_empresa_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade,
+  foreign key aut_autorizacao_fk (aut_id) references autorizacao (aut_id) on delete restrict on update cascade
 );
 
 create table empresa_vaga (
