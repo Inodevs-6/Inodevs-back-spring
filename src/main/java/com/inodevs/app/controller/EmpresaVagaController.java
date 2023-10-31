@@ -31,7 +31,7 @@ public class EmpresaVagaController {
 
     @GetMapping(value = "/{id}")
     public EmpresaVaga buscarPorVagaEditada(@PathVariable("id") Long id) {
-        return empresaVagaService.buscarCandidatosPorVagaEditada(id);
+        return empresaVagaService.buscarCandidatosPorVagaEditada(id+1);
     }
 
     @GetMapping(value = "/{empresa}/{vaga}")
