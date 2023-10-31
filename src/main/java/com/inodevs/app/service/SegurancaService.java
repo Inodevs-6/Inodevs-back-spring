@@ -1,7 +1,6 @@
 package com.inodevs.app.service;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.inodevs.app.entity.Autorizacao;
 import com.inodevs.app.entity.Empresa;
 import com.inodevs.app.repository.EmpresaRepository;
 
@@ -27,10 +25,7 @@ public class SegurancaService implements UserDetailsService{
             throw new UsernameNotFoundException("Empresa não encontrado!");
         }
         Empresa empresa = empresaOp.get();
-        return User.builder().username(username).password(empresa.getSenha())
-            .authorities(empresa.getAutorizacoes().stream()
-            .map(Autorizacao::getEmail).collect(Collectors.toList())
-            .toArray(new String[empresa.getAutorizacoes().size()]))
+        return User.builder().username(empresa.getEmail()).password(empresa.getSenha())
         .build();
     }
     

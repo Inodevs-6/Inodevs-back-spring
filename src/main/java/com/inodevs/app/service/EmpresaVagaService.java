@@ -1,6 +1,7 @@
 package com.inodevs.app.service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.inodevs.app.entity.EmpresaVaga;
@@ -22,6 +23,7 @@ public class EmpresaVagaService {
     @Autowired
     private VagaRepository vagaRepo;
 
+    @PreAuthorize("isAuthenticated")
     public EmpresaVaga editarVaga(Long emp_id, Long vaga_id, Vaga vagas) {
         
         Optional<EmpresaVaga> empresaVagas = empresaVagaRepo.findByEmpresaIdAndVagaId(emp_id, vaga_id);
@@ -52,6 +54,7 @@ public class EmpresaVagaService {
         return empresaVagaRepo.save(empresaVagas.get());  
     }
 
+    @PreAuthorize("isAuthenticated")
     public EmpresaVaga buscarCandidatosPorVagaEditada(Long id) {
         Optional<EmpresaVaga> empresaVagaOp = empresaVagaRepo.findById(id);
         if(empresaVagaOp.isEmpty()) {

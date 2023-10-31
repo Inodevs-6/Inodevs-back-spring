@@ -1,16 +1,13 @@
 package com.inodevs.app.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.inodevs.app.entity.Autorizacao;
 import com.inodevs.app.entity.Empresa;
-import com.inodevs.app.repository.AutorizacaoRepository;
 import com.inodevs.app.repository.EmpresaRepository;
 
 @Service
@@ -18,9 +15,6 @@ public class EmpresaService{
 
     @Autowired
     private PasswordEncoder encoder;
-
-    @Autowired
-    private AutorizacaoRepository autorizacaoRepo;
 
     @Autowired
     private EmpresaRepository empresaRepo;
@@ -42,29 +36,13 @@ public class EmpresaService{
                 empresa.getSegmento() == null ||
                 empresa.getPorte() == null) {
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
-        }
-        List<Autorizacao> autorizacoes = new ArrayList<Autorizacao>();
-        for(Autorizacao aut: empresa.getAutorizacoes()) {
-            Autorizacao nova;
-            if(aut.getId() == null) {
-                nova = novaAutorizacao(aut);
-            } 
-            else {
-                Optional<Autorizacao> autOp = autorizacaoRepo.findById(aut.getId());
-                if(autOp.isEmpty()) {
-                    throw new RuntimeException("Autorizacao com id " + 
-                        aut.getId() + " nao encontrada!");  
-                }
-                nova = autOp.get();
-            }
-            autorizacoes.add(nova);
         }               
-        empresa.setAutorizacoes(autorizacoes);
         empresa.setSenha(encoder.encode(empresa.getSenha()));
         return empresaRepo.save(empresa);
             
     }
 
+    @PreAuthorize("isAuthenticated")
     public Empresa editarEmpresa(Long emp_id, Empresa empresa) {
 
         Optional<Empresa> empresaOp = empresaRepo.findById(emp_id);
@@ -83,6 +61,7 @@ public class EmpresaService{
         return empresaRepo.save(newEmpresa);  
     }
 
+    @PreAuthorize("isAuthenticated")
     public Empresa editarSenha(Long emp_id, Empresa empresa) {
 
         Optional<Empresa> empresaOp = empresaRepo.findById(emp_id);
@@ -96,7 +75,7 @@ public class EmpresaService{
 
         return empresaRepo.save(newEmpresa);  
     }
-
+    
     public Empresa buscarEmpresa(Long emp_id) {
         Optional<Empresa> empresaOp = empresaRepo.findById(emp_id);
         if(empresaOp.isEmpty()) {

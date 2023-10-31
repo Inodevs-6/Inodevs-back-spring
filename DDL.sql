@@ -26,7 +26,7 @@ create table empresa (
 create table vaga (
     vaga_id bigint unsigned not null auto_increment,
     vaga_nome varchar(50) not null,
-    vaga_nivel varchar(50) not null,
+    vaga_nivel varchar(20) not null,
     vaga_conhecimentos text,
     vaga_habilidades text,
     vaga_atitudes text,
@@ -38,21 +38,6 @@ create table candidato (
     cand_exp text not null,
     cand_link varchar(100) not null,
     primary key (cand_id)
-);
-
-create table autorizacao (
-    aut_id bigint unsigned not null auto_increment,
-    aut_email varchar(100) not null,
-    primary key (aut_id),
-    unique key uni_aut_email (aut_email)
-);
-
-create table uau_empresa_autorizacao (
-  emp_id bigint unsigned not null,
-  aut_id bigint unsigned not null,
-  primary key (emp_id, aut_id),
-  foreign key aut_empresa_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade,
-  foreign key aut_autorizacao_fk (aut_id) references autorizacao (aut_id) on delete restrict on update cascade
 );
 
 create table empresa_vaga (
@@ -78,4 +63,4 @@ create table candidato_vaga (
 );
 
 insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
-	values ('teste', 235547456, 'email@teste.com', 'senha', 'tecnologia', 'medio');
+	values ('teste', 235547456, 'email@teste.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');

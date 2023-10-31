@@ -17,7 +17,7 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtUtils {
 
-    private static final String KEY = "com.inodevs.appexample";
+    private static final String KEY = "com.inodevs.gerenciamentovagas.backend";
 
     public static String generateToken(Authentication empresa) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
