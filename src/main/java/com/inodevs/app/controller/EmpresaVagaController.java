@@ -33,4 +33,9 @@ public class EmpresaVagaController {
     public EmpresaVaga buscarPorVagaEditada(@PathVariable("id") Long id) {
         return empresaVagaService.buscarCandidatosPorVagaEditada(id);
     }
+
+    @GetMapping(value = "/{empresa}/{vaga}")
+    public EmpresaVaga buscarVagaEditada(@PathVariable("empresa") Long empresa, @PathVariable("vaga") Long vaga) {
+        return empresaVagaService.buscarCHAPorVagaEditada(empresa, vaga);
+    }
 }

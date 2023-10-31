@@ -60,4 +60,13 @@ public class EmpresaVagaService {
         return empresaVagaOp.get();
     }
 
+    public EmpresaVaga buscarCHAPorVagaEditada(Long empresa, Long vaga) {
+        Optional<EmpresaVaga> empresaVagaOp = empresaVagaRepo.findByEmpresaIdAndVagaId(empresa, vaga);
+        if(empresaVagaOp.isEmpty()) {
+            throw new IllegalArgumentException("Vaga não encontrada!");
+        }
+        return empresaVagaOp.get();
+
+    }
+
 }
