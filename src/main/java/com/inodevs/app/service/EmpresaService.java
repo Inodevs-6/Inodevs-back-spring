@@ -83,5 +83,13 @@ public class EmpresaService{
         }
         return empresaOp.get();
     }
+
+    public Empresa buscarEmpresaPorEmail(String emp_email) {
+        Optional<Empresa> empresaOp = empresaRepo.findByEmail(emp_email);
+        if(empresaOp.isEmpty()) {
+            throw new IllegalArgumentException("empresa não encontrada!");
+        }
+        return empresaOp.get();
+    }
     
 }
