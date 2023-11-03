@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.inodevs.app.entity.CandidatoVaga;
 import com.inodevs.app.entity.Vaga;
+import com.inodevs.app.repository.CandidatoVagaRepository;
 import com.inodevs.app.repository.VagaRepository;
 
 
@@ -17,6 +19,9 @@ public class VagaService {
 
     @Autowired
     private VagaRepository vagaRepo;
+
+    @Autowired
+    private CandidatoVagaRepository candidatoVagaRepo;
 
     public Vaga novaVaga(Vaga vaga) {
 
@@ -31,13 +36,18 @@ public class VagaService {
         return vagaRepo.save(vaga);        
     }
 
-    public Vaga buscarCandidatosPorVaga(Long id) {
+    public List<CandidatoVaga> buscarCandidatosPorVaga(Long id) {
+        return candidatoVagaRepo.findByVagaId(id);
+    }
+
+    public Vaga buscarVagaPorId(Long id) {
         Optional<Vaga> vagaOp = vagaRepo.findById(id);
         if(vagaOp.isEmpty()) {
             throw new IllegalArgumentException("Vaga não encontrada!");
         }
         return vagaOp.get();
     }
+
 
     public List<Vaga> buscarTodosVagas() {
         try {

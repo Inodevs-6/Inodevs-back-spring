@@ -2,7 +2,6 @@ package com.inodevs.app.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
