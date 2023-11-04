@@ -64,4 +64,17 @@ public class VagaService {
 
     }
 
+    @PreAuthorize("isAuthenticated")
+    public List<Vaga> buscarVagasPorEmpresa(Long id) {
+        try {
+            if (id == null) {
+                throw new IllegalArgumentException("O id da empresa não pode ser vazio!");
+            }
+            return vagaRepo.findByEmpresasEmpresaId(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as vagas pelo id da empresa!");
+        }
+
+    }
+
 }

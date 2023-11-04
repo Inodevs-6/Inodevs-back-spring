@@ -64,7 +64,7 @@ public class EmpresaService{
 
         Empresa newEmpresa = empresaOp.get();
 
-        newEmpresa.setSenha(empresa.getSenha());
+        newEmpresa.setSenha(encoder.encode(empresa.getSenha()));
 
         return empresaRepo.save(newEmpresa);  
     }

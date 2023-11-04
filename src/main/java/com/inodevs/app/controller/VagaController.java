@@ -41,5 +41,10 @@ public class VagaController {
     public List<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
         return vagaService.buscarVagasPorNome(nome);
     }
+
+    @GetMapping(value = "/empresa/{id}")
+    public List<Vaga> buscarVagasPorEmpresa(@PathVariable("id") Long id) {
+        return vagaService.buscarVagasPorEmpresa(id);
+    }
   
 }
