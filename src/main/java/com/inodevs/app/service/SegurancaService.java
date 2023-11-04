@@ -1,8 +1,12 @@
 package com.inodevs.app.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,8 +29,9 @@ public class SegurancaService implements UserDetailsService{
             throw new UsernameNotFoundException("Empresa não encontrado!");
         }
         Empresa empresa = empresaOp.get();
-        return User.builder().username(empresa.getEmail()).password(empresa.getSenha())
-        .build();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return User.builder().username(empresa.getEmail()).password(empresa.getSenha()).authorities("ROLE_USER").build();
     }
     
 }

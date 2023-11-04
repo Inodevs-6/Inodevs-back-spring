@@ -1,5 +1,7 @@
 package com.inodevs.app.security;
 
+import com.inodevs.app.entity.Empresa;
+
 public class Login {
     
     private String username;
@@ -9,6 +11,8 @@ public class Login {
     private String auth;
     
     private String token;
+
+    private Empresa empresa;
 
     public Login() {}
 
@@ -47,6 +51,14 @@ public class Login {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
 }

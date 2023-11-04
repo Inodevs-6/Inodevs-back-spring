@@ -30,11 +30,7 @@ public class EmpresaVagaService {
 
         if (empresaVagas.isEmpty()) {
 
-            System.out.println(emp_id);
-
             Optional<Empresa> empresa = empresaRepo.findById(emp_id);
-
-            System.out.println(empresa);
 
             Optional<Vaga> vaga = vagaRepo.findById(vaga_id);
 

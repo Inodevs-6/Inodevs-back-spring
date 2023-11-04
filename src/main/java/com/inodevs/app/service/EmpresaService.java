@@ -20,14 +20,7 @@ public class EmpresaService{
     private EmpresaRepository empresaRepo;
 
     public Empresa novaEmpresa (Empresa empresa) {
-        
-        System.out.println(empresa.getNome());
-        System.out.println(empresa.getCnpj());
-        System.out.println(empresa.getEmail());
-        System.out.println(empresa.getSenha());
-        System.out.println(empresa.getSegmento());
-        System.out.println(empresa.getPorte());
-
+  
         if(empresa == null ||
                 empresa.getNome() == null ||
                 empresa.getCnpj() == null ||
