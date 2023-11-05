@@ -14,7 +14,11 @@ create table empresa (
     emp_id bigint unsigned not null auto_increment,
     emp_nome varchar(50) not null,
     emp_cnpj varchar(18) not null,
+    emp_email varchar(30) not null,
     emp_descricao text,
+    emp_senha varchar(150) not null,
+    emp_segmento varchar(30) not null,
+    emp_porte enum('micro', 'pequeno', 'medio', 'grande') not null,
     primary key (emp_id),
     unique key (emp_cnpj)
 );
@@ -22,7 +26,7 @@ create table empresa (
 create table vaga (
     vaga_id bigint unsigned not null auto_increment,
     vaga_nome varchar(50) not null,
-    vaga_nivel varchar(50) not null,
+    vaga_nivel varchar(20) not null,
     vaga_conhecimentos text,
     vaga_habilidades text,
     vaga_atitudes text,
@@ -32,7 +36,7 @@ create table vaga (
 create table candidato (
     cand_id bigint unsigned not null auto_increment,
     cand_exp text not null,
-    cand_link varchar(50) not null,
+    cand_link varchar(100) not null,
     primary key (cand_id)
 );
 
@@ -58,5 +62,5 @@ create table candidato_vaga (
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
 
-insert into empresa (emp_nome, emp_cnpj, emp_descricao)
-	values ('teste', 235547456, 'uma descricao');
+insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
+	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');
