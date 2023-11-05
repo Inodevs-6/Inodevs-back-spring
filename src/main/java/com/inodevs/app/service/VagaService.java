@@ -39,12 +39,8 @@ public class VagaService {
     }
 
     @PreAuthorize("isAuthenticated")
-    public Vaga buscarCandidatosPorVaga(Long id) {
-        Optional<Vaga> vagaOp = vagaRepo.findById(id);
-        if(vagaOp.isEmpty()) {
-            throw new IllegalArgumentException("Vaga não encontrada!");
-        }
-        return vagaOp.get();
+    public List<CandidatoVaga> buscarCandidatosPorVaga(Long id) {
+        return candidatoVagaRepo.findByVagaId(id);
     }
 
     @PreAuthorize("isAuthenticated")
