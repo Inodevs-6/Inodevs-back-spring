@@ -51,6 +51,15 @@ public class VagaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao listar as Vagas!");
         }
     }
+
+    @PreAuthorize("isAuthenticated")
+    public Vaga buscarVagaPorId(Long id) {
+        Optional<Vaga> vagaOp = vagaRepo.findById(id);
+        if(vagaOp.isEmpty()) {
+            throw new IllegalArgumentException("Vaga não encontrada!");
+        }
+        return vagaOp.get();
+    }
     
     @PreAuthorize("isAuthenticated")
     public List<Vaga> buscarVagasPorNome(String nome) {
