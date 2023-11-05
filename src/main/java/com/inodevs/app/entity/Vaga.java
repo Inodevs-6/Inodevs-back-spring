@@ -2,6 +2,8 @@ package com.inodevs.app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,9 +37,11 @@ public class Vaga {
     private String atitudes;
 
     @OneToMany(mappedBy = "vaga")
+    @JsonIgnore
     private List<CandidatoVaga> candidatos;
 
     @OneToMany(mappedBy = "vaga")
+    @JsonIgnore
     private List<EmpresaVaga> empresas;
 
     public Vaga() {}
@@ -105,5 +109,14 @@ public class Vaga {
     public void setCandidatos(List<CandidatoVaga> candidatos) {
         this.candidatos = candidatos;
     }
+
+    public List<EmpresaVaga> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<EmpresaVaga> empresas) {
+        this.empresas = empresas;
+    }
+
 
 }

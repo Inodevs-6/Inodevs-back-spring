@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.inodevs.app.entity.CandidatoVaga;
 import com.inodevs.app.entity.Vaga;
 import com.inodevs.app.service.VagaService;
 
@@ -28,16 +29,21 @@ public class VagaController {
     }
 
     @GetMapping(value = "/match/{id}")
-    public Vaga buscarPorVaga(@PathVariable("id") Long id) {
+    public List<CandidatoVaga> buscarPorVaga(@PathVariable("id") Long id) {
         return vagaService.buscarCandidatosPorVaga(id);
     }
 
     @GetMapping
     public List<Vaga> todosVagas() {
         return vagaService.buscarTodosVagas();
+    } 
+
+    @GetMapping(value = "{id}")
+    public Vaga buscarVagaPorId(@PathVariable("id") Long id) {
+        return vagaService.buscarVagaPorId(id);
     }
 
-    @GetMapping(value = "/{nome}")
+    @GetMapping(value = "/nome/{nome}")
     public List<Vaga> buscarVagasPorName(@PathVariable("nome") String nome) {
         return vagaService.buscarVagasPorNome(nome);
     }

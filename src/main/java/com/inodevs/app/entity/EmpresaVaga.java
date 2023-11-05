@@ -18,12 +18,12 @@ public class EmpresaVaga {
     
     @Id
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "vaga_id")
     private Vaga vaga;
     
     @Id
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "emp_id")
     private Empresa empresa;
 

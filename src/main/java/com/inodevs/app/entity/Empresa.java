@@ -53,6 +53,7 @@ public class Empresa {
     private Porte porte;
 
     @OneToMany(mappedBy = "empresa")
+    @JsonIgnore
     private List<EmpresaVaga> vagas;
 
     public Long getId() {

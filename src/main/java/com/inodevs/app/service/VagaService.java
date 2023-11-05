@@ -9,7 +9,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.inodevs.app.entity.CandidatoVaga;
 import com.inodevs.app.entity.Vaga;
+import com.inodevs.app.repository.CandidatoVagaRepository;
 import com.inodevs.app.repository.VagaRepository;
 
 
@@ -18,6 +20,9 @@ public class VagaService {
 
     @Autowired
     private VagaRepository vagaRepo;
+
+    @Autowired
+    private CandidatoVagaRepository candidatoVagaRepo;
 
     @PreAuthorize("isAuthenticated")
     public Vaga novaVaga(Vaga vaga) {
