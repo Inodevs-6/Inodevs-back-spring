@@ -14,5 +14,7 @@ public interface VagaRepository extends JpaRepository<Vaga, Long> {
     public Optional<Vaga> findById(Long id);
 
     public List<Vaga> findByNomeContaining(String nome);
+
+    public List<Vaga> findByEmpresasEmpresaId(Long id);
   
 }

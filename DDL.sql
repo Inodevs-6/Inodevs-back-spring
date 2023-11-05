@@ -26,7 +26,7 @@ create table empresa (
 create table vaga (
     vaga_id bigint unsigned not null auto_increment,
     vaga_nome varchar(50) not null,
-    vaga_nivel varchar(50) not null,
+    vaga_nivel varchar(20) not null,
     vaga_conhecimentos text,
     vaga_habilidades text,
     vaga_atitudes text,
@@ -36,7 +36,7 @@ create table vaga (
 create table candidato (
     cand_id bigint unsigned not null auto_increment,
     cand_exp text not null,
-    cand_link varchar(50) not null,
+    cand_link varchar(100) not null,
     primary key (cand_id)
 );
 
@@ -63,4 +63,4 @@ create table candidato_vaga (
 );
 
 insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
-	values ('teste', 235547456, 'email@teste.com', 'senha', 'tecnologia', 'medio');
+	values ('teste', 235547456, 'email@teste.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');

@@ -45,4 +45,10 @@ public class EmpresaController {
     public Empresa buscarEmpresa(@PathVariable("emp_id") Long emp_id) {
         return empresaService.buscarEmpresa(emp_id);
     }
+
+    @GetMapping(value = "/email/{emp_email}")
+    public Empresa buscarEmpresaPorEmail(@PathVariable("emp_email") String emp_email) {
+        return empresaService.buscarEmpresaPorEmail(emp_email);
+    }
+
 }
