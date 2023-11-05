@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +24,7 @@ public class VagaService {
     @Autowired
     private CandidatoVagaRepository candidatoVagaRepo;
 
+    @PreAuthorize("isAuthenticated")
     public Vaga novaVaga(Vaga vaga) {
 
         if (vaga == null ||
@@ -36,11 +38,8 @@ public class VagaService {
         return vagaRepo.save(vaga);        
     }
 
-    public List<CandidatoVaga> buscarCandidatosPorVaga(Long id) {
-        return candidatoVagaRepo.findByVagaId(id);
-    }
-
-    public Vaga buscarVagaPorId(Long id) {
+    @PreAuthorize("isAuthenticated")
+    public Vaga buscarCandidatosPorVaga(Long id) {
         Optional<Vaga> vagaOp = vagaRepo.findById(id);
         if(vagaOp.isEmpty()) {
             throw new IllegalArgumentException("Vaga não encontrada!");
@@ -48,7 +47,7 @@ public class VagaService {
         return vagaOp.get();
     }
 
-
+    @PreAuthorize("isAuthenticated")
     public List<Vaga> buscarTodosVagas() {
         try {
             return vagaRepo.findAll();
@@ -56,7 +55,8 @@ public class VagaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao listar as Vagas!");
         }
     }
-
+    
+    @PreAuthorize("isAuthenticated")
     public List<Vaga> buscarVagasPorNome(String nome) {
         try {
             if (nome == null || nome.isBlank()) {
@@ -65,6 +65,19 @@ public class VagaService {
             return vagaRepo.findByNomeContaining(nome);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as Vagas por nome!");
+        }
+
+    }
+
+    @PreAuthorize("isAuthenticated")
+    public List<Vaga> buscarVagasPorEmpresa(Long id) {
+        try {
+            if (id == null) {
+                throw new IllegalArgumentException("O id da empresa não pode ser vazio!");
+            }
+            return vagaRepo.findByEmpresasEmpresaId(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar as vagas pelo id da empresa!");
         }
 
     }
