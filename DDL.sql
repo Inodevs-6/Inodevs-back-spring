@@ -45,7 +45,7 @@ create table notification (
     notification_type varchar(15) not null,
     vaga_nome varchar(50) not null,
     vaga_nivel varchar(20) not null,
-    notification_date datetime not null,
+    notification_datetime datetime not null,
     primary key (notification_id)
 );
 
