@@ -40,6 +40,15 @@ create table candidato (
     primary key (cand_id)
 );
 
+create table notification (
+    notification_id bigint unsigned not null auto_increment,
+    notification_type varchar(15) not null,
+    vaga_nome varchar(50) not null,
+    vaga_nivel varchar(20) not null,
+    notification_date datetime not null,
+    primary key (notification_id)
+);
+
 create table empresa_vaga (
     vaga_id bigint unsigned not null,
     emp_id bigint unsigned not null,
