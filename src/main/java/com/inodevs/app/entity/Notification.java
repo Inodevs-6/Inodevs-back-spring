@@ -1,16 +1,10 @@
 package com.inodevs.app.entity;
-
 import java.time.LocalDateTime;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,11 +27,6 @@ public class Notification {
 
     @Column(name = "notification_datetime")
     private LocalDateTime datetime;
-
-
-    @OneToMany(mappedBy = "notification")
-    @JsonIgnore
-    private List<Notification> notification;
 
     public Notification() {
     }
@@ -87,14 +76,6 @@ public class Notification {
 
     public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
-    }
-
-    public List<Notification> getNotification() {
-        return this.notification;
-    }
-
-    public void setVagas(List<Notification> notification) {
-        this.notification = notification;
     }
 
 }

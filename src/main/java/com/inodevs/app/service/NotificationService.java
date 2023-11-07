@@ -14,12 +14,12 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepo;
 
-    @PreAuthorize("isAuthenticated")
+    //@PreAuthorize("isAuthenticated")
     public List<Notification> buscarTodos() {
         return notificationRepo.findAll();
     }
 
-    @PreAuthorize("isAuthenticated")
+    //@PreAuthorize("isAuthenticated")
     public Notification novaNotificacao(Notification notification) {
 
         if (notification == null ||
@@ -28,8 +28,7 @@ public class NotificationService {
                 notification.getNome() == null ||
                 notification.getNome().isBlank() ||
                 notification.getNivel() == null ||
-                notification.getNivel().isBlank() ||
-                notification.getDatetime() == null) {
+                notification.getNivel().isBlank()) {
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }
         
@@ -38,3 +37,4 @@ public class NotificationService {
         return notificationRepo.save(notification);
     }
 }
+
