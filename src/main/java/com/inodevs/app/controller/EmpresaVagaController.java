@@ -29,11 +29,6 @@ public class EmpresaVagaController {
         return ResponseEntity.ok(empresaVaga);
     }
 
-   // @GetMapping(value = "/{id}")
-   // public EmpresaVaga buscarPorVagaEditada(@PathVariable("id") Long id) {
-      //  return empresaVagaService.buscarCandidatosPorVagaEditada(id+1);
-   //
-
     @GetMapping(value = "/{empresa}/{vaga}")
     public EmpresaVaga buscarVagaEditada(@PathVariable("empresa") Long empresa, @PathVariable("vaga") Long vaga) {
         return empresaVagaService.buscarCHAPorVagaEditada(empresa, vaga);
