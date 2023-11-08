@@ -26,6 +26,4 @@ public class NotificationController {
         return notificationService.novaNotificacao(notification);
     }
 
-    ///notification'/' + type + '/' + name + '/' + level
-
 }
