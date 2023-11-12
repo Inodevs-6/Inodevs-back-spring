@@ -24,6 +24,7 @@ public class EmpresaController {
 
     @PostMapping
     public Empresa novaEmpresa(@RequestBody Empresa empresa) {
+        empresa.setTfaAtivado(true);
         return empresaService.novaEmpresa(empresa);
     }
 

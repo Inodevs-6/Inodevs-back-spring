@@ -56,6 +56,15 @@ public class Empresa {
     @JsonIgnore
     private List<EmpresaVaga> vagas;
 
+    @Column(name = "emp_tfa_ativado")
+    private Boolean tfaAtivado;
+
+    @Column(name = "emp_tfa_codigo")
+    private String tfaCodigo;
+
+    @Column(name = "emp_tfa_tempo_expiracao")
+    private Long tfaTempoExpiracao;
+
     public Long getId() {
         return id;
     }
@@ -120,7 +129,43 @@ public class Empresa {
         this.porte = porte;
     }
 
-    public Empresa(String nome, String cnpj, String email, String descricao, String senha, String segmento, Porte porte) {
+    public List<EmpresaVaga> getVagas() {
+        return this.vagas;
+    }
+
+    public void setVagas(List<EmpresaVaga> vagas) {
+        this.vagas = vagas;
+    }
+
+    public Boolean isTfaAtivado() {
+        return this.tfaAtivado;
+    }
+
+    public Boolean getTfaAtivado() {
+        return this.tfaAtivado;
+    }
+
+    public void setTfaAtivado(Boolean tfaAtivado) {
+        this.tfaAtivado = tfaAtivado;
+    }
+
+    public String getTfaCodigo() {
+        return this.tfaCodigo;
+    }
+
+    public void setTfaCodigo(String tfaCodigo) {
+        this.tfaCodigo = tfaCodigo;
+    }
+
+    public Long getTfaTempoExpiracao() {
+        return this.tfaTempoExpiracao;
+    }
+
+    public void setTfaTempoExpiracao(Long tfaTempoExpiracao) {
+        this.tfaTempoExpiracao = tfaTempoExpiracao;
+    }
+
+    public Empresa(String nome, String cnpj, String email, String descricao, String senha, String segmento, Porte porte, Boolean tfaAtivado) {
         this.nome = nome;
         this.cnpj = cnpj;
         this.email = email;
@@ -128,6 +173,7 @@ public class Empresa {
         this.senha = senha;
         this.segmento = segmento;
         this.porte = porte;
+        this.tfaAtivado = tfaAtivado;
     }
 
     public Empresa(){

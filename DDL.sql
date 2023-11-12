@@ -1,14 +1,14 @@
-drop schema if exists inodevs;
+drop schema if exists teste;
 
-create schema inodevs;
+create schema teste;
 
-drop user if exists 'user'@'localhost';
+drop user if exists 'user2'@'localhost';
 
-create user 'user'@'localhost' identified by 'pass123';
+create user 'user2'@'localhost' identified by 'pass123';
 
-grant select, insert, delete, update on inodevs.* to user@'localhost';
+grant select, insert, delete, update on teste.* to user@'localhost';
 
-use inodevs;
+use teste;
 
 create table empresa (
     emp_id bigint unsigned not null auto_increment,
@@ -19,6 +19,9 @@ create table empresa (
     emp_senha varchar(150) not null,
     emp_segmento varchar(30) not null,
     emp_porte enum('micro', 'pequeno', 'medio', 'grande') not null,
+    emp_tfa_codigo varchar(10),
+    emp_tfa_ativado tinyint(1),
+    emp_tfa_tempo_expiracao bigint,
     primary key (emp_id),
     unique key (emp_cnpj)
 );
