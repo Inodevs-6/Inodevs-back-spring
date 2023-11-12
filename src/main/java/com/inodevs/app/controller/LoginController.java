@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inodevs.app.entity.Empresa;
+import com.inodevs.app.entity.Verificar;
 import com.inodevs.app.security.JwtUtils;
 import com.inodevs.app.security.Login;
 import com.inodevs.app.service.EmpresaService;
@@ -64,5 +65,14 @@ public class LoginController {
     public ResponseEntity<Object> sendTfaCodeInSMS(@PathVariable("id") Long id, @PathVariable("telefone") String telefone) {
         return null;
     }
+
+    @PostMapping(value="/tfaverificar") 
+	public ResponseEntity<Object> verificarCodigo(@RequestBody Verificar verificar) {
+        boolean isValid = segurancaService.verificarCodigo(verificar.email, verificar.codigo);
+		if(isValid) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+	}
  
 }

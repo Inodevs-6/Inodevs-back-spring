@@ -14,6 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -88,5 +89,13 @@ public class SegurancaService implements UserDetailsService{
     public boolean sendTfaSMS(String telefone) {
         return false;
     }
-    
+
+    public boolean verificarCodigo(String email, String codigo) {
+        Optional<Empresa> empresaOp = empresaRepo.findByEmailAndTfaCodigoAndTfaTempoExpiracaoGreaterThanEqual(email, codigo, System.currentTimeMillis()/1000);
+        if(empresaOp.isEmpty()){
+            return false;
+        }
+        return true;
+    }
+	
 }
