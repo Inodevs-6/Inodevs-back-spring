@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inodevs.app.entity.Empresa;
-import com.inodevs.app.entity.Verificar;
 import com.inodevs.app.security.JwtUtils;
 import com.inodevs.app.security.Login;
+import com.inodevs.app.security.Verificar;
 import com.inodevs.app.service.EmpresaService;
 import com.inodevs.app.service.SegurancaService;
 
@@ -40,16 +41,14 @@ public class LoginController {
     private EmpresaService empresaService;
     
     @PostMapping
-    public Login autenticar(@RequestBody Login login) throws JsonProcessingException {
+    public Login autenticar(@RequestBody Login login) {
         Authentication auth = new UsernamePasswordAuthenticationToken(login.getUsername(), 
             login.getPassword());
         auth = authManager.authenticate(auth);
-        login.setToken(JwtUtils.generateToken(auth));
-        Empresa empresa = empresaService.buscarEmpresaPorEmail(login.getUsername());
-        login.setEmpresa(empresa);
+        login.setPassword(null);
         return login;
     }
-    
+
     @GetMapping(value="/verificar")
     public ResponseEntity<String> verificar() {
         return ResponseEntity.ok("Token válido!");
@@ -67,12 +66,22 @@ public class LoginController {
     }
 
     @PostMapping(value="/tfaverificar") 
-	public ResponseEntity<Object> verificarCodigo(@RequestBody Verificar verificar) {
-        boolean isValid = segurancaService.verificarCodigo(verificar.email, verificar.codigo);
-		if(isValid) {
-            return new ResponseEntity<>(HttpStatus.OK);
+	public Login verificarCodigo(@RequestBody Verificar verificar) throws JsonProcessingException {
+        Login login = new Login();
+        login.setUsername(verificar.getUsername());
+        login.setPassword(verificar.getPassword());
+        Authentication auth = new UsernamePasswordAuthenticationToken(login.getUsername(), 
+            login.getPassword());
+        login.setToken(JwtUtils.generateToken(auth));
+        Empresa empresa = empresaService.buscarEmpresaPorEmail(login.getUsername());
+        login.setEmpresa(empresa);
+        auth = authManager.authenticate(auth);
+        login.setToken(JwtUtils.generateToken(auth));
+        boolean isValid = segurancaService.verificarCodigo(verificar.getUsername(), verificar.getCodigo());
+		if(!isValid) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Codigo invalido!");
         }
-		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		return login;
 	}
  
 }
