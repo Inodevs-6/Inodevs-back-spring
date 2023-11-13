@@ -66,4 +66,4 @@ create table candidato_vaga (
 );
 
 insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
-	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');
+	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio'),   ('gustavo', 125547456, 'gustavo.k.ando@gmail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');
