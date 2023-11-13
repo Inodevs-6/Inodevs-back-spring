@@ -1,14 +1,14 @@
-drop schema if exists teste;
+drop schema if exists inodevs;
 
-create schema teste;
+create schema inodevs;
 
-drop user if exists 'user2'@'localhost';
+drop user if exists 'user'@'localhost';
 
-create user 'user2'@'localhost' identified by 'pass123';
+create user 'user'@'localhost' identified by 'pass123';
 
-grant select, insert, delete, update on teste.* to user@'localhost';
+grant select, insert, delete, update on inodevs.* to user@'localhost';
 
-use teste;
+use inodevs;
 
 create table empresa (
     emp_id bigint unsigned not null auto_increment,
@@ -19,7 +19,7 @@ create table empresa (
     emp_senha varchar(150) not null,
     emp_segmento varchar(30) not null,
     emp_porte enum('micro', 'pequeno', 'medio', 'grande') not null,
-    emp_tfa_codigo varchar(10),
+    emp_tfa_codigo varchar(150),
     emp_tfa_ativado tinyint(1),
     emp_tfa_tempo_expiracao bigint,
     primary key (emp_id),
@@ -65,5 +65,5 @@ create table candidato_vaga (
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
 
-insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
-	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio'),   ('gustavo', 125547456, 'gustavo.k.ando@gmail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');
+insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte, emp_tfa_ativado)
+	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio', 1),   ('gustavo', 125547456, 'gustavo.k.ando@gmail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio', 1);

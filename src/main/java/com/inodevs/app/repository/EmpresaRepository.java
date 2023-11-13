@@ -11,5 +11,5 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     public Optional<Empresa> findByEmail(String email);
 
-    public Optional<Empresa> findByEmailAndTfaCodigoAndTfaTempoExpiracaoGreaterThanEqual(String email, String tfaCodigo, Long tfaTempoExpiracao);
+    public Optional<Empresa> findByEmailAndTfaTempoExpiracaoGreaterThanEqual(String email, Long tfaTempoExpiracao);
 }

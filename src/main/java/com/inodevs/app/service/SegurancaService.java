@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.inodevs.app.entity.Empresa;
@@ -29,6 +30,9 @@ public class SegurancaService implements UserDetailsService{
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Empresa> empresaOp = empresaRepo.findByEmail(username);
@@ -42,7 +46,7 @@ public class SegurancaService implements UserDetailsService{
     }
 
     public void sendTfaEmail(String email) throws AddressException, MessagingException {
-        String tfaCode = String.valueOf(new Random().nextInt(9999) + 1000);
+        String tfaCode = String.valueOf(new Random().nextInt(999999 - 100000 + 1) + 100000);
 
         Optional<Empresa> empresaOp = empresaRepo.findByEmail(email);
         if(empresaOp.isEmpty()){
@@ -50,11 +54,13 @@ public class SegurancaService implements UserDetailsService{
         }
         Empresa empresa = empresaOp.get();
 
-        empresa.setTfaCodigo(tfaCode);
         empresa.setTfaTempoExpiracao((System.currentTimeMillis()/1000) + 120);
-        empresaRepo.save(empresa);
         
         emailService.sendEmail(email, "Código de Autenticação de Dois Fatores", "\"Você acabou de tentar entrar na sua conta. Seu código de verificação é: " + tfaCode + "\nCaso não seja você que acabou de tentar logar, altere sua senha imediatamente.\"");
+
+        String tfaCodeEncoded = encoder.encode(tfaCode);
+        empresa.setTfaCodigo(tfaCodeEncoded);
+        empresaRepo.save(empresa);
     }
 
     public boolean sendTfaSMS(String telefone) {
@@ -62,8 +68,12 @@ public class SegurancaService implements UserDetailsService{
     }
 
     public boolean verificarCodigo(String email, String codigo) {
-        Optional<Empresa> empresaOp = empresaRepo.findByEmailAndTfaCodigoAndTfaTempoExpiracaoGreaterThanEqual(email, codigo, System.currentTimeMillis()/1000);
+        Optional<Empresa> empresaOp = empresaRepo.findByEmailAndTfaTempoExpiracaoGreaterThanEqual(email, System.currentTimeMillis()/1000);
         if(empresaOp.isEmpty()){
+            return false;
+        }
+        Empresa empresa = empresaOp.get();
+        if (!encoder.matches(codigo, empresa.getTfaCodigo())){
             return false;
         }
         return true;
