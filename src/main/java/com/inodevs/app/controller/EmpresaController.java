@@ -26,6 +26,8 @@ public class EmpresaController {
 
     @PostMapping("/nova-empresa")
     public Empresa novaEmpresa(@RequestBody Empresa empresa) {
+        empresa.setTfaAtivado(true);
+
         // Verifique a senha da empresa
         if (!senhaAtendeRequisitos(empresa.getSenha())) {
             throw new SecurityException("A senha não atende aos requisitos mínimos.");

@@ -19,6 +19,9 @@ create table empresa (
     emp_senha varchar(150) not null,
     emp_segmento varchar(30) not null,
     emp_porte enum('micro', 'pequeno', 'medio', 'grande') not null,
+    emp_tfa_codigo varchar(150),
+    emp_tfa_ativado tinyint(1),
+    emp_tfa_tempo_expiracao bigint,
     primary key (emp_id),
     unique key (emp_cnpj)
 );
@@ -62,5 +65,5 @@ create table candidato_vaga (
     foreign key cand_vaga_fk (cand_id) references candidato (cand_id) on delete restrict on update cascade
 );
 
-insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte)
-	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio');
+insert into empresa (emp_nome, emp_cnpj, emp_email, emp_senha, emp_segmento, emp_porte, emp_tfa_ativado)
+	values ('teste', 235547456, 'admin@mail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio', 1),   ('gustavo', 125547456, 'gustavo.k.ando@gmail.com', '$2a$10$i3.Z8Yv1Fwl0I5SNjdCGkOTRGQjGvHjh/gMZhdc3e7LIovAklqM6C', 'tecnologia', 'medio', 1);
