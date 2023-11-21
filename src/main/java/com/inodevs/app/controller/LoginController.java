@@ -41,11 +41,19 @@ public class LoginController {
     private EmpresaService empresaService;
     
     @PostMapping
-    public Login autenticar(@RequestBody Login login) {
+    public Login autenticar(@RequestBody Login login) throws JsonProcessingException {
         Authentication auth = new UsernamePasswordAuthenticationToken(login.getUsername(), 
             login.getPassword());
         auth = authManager.authenticate(auth);
         login.setPassword(null);
+    
+        Empresa empresa = empresaService.buscarEmpresaPorEmail(login.getUsername());
+        
+        if (empresa.getTfaAtivado() == false) {
+            login.setToken(JwtUtils.generateToken(auth));
+            login.setEmpresa(empresa);
+        }
+
         return login;
     }
 
