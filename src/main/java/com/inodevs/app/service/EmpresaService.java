@@ -2,6 +2,9 @@ package com.inodevs.app.service;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +21,9 @@ public class EmpresaService{
 
     @Autowired
     private EmpresaRepository empresaRepo;
+
+    @Autowired
+    private EmailService emailService;
 
     public Empresa novaEmpresa (Empresa empresa) {
   
@@ -84,5 +90,17 @@ public class EmpresaService{
         }
         return empresaOp.get();
     }
-    
+
+    public void emailRedefinicaoSenha(String email) throws AddressException, MessagingException {
+
+        Optional<Empresa> empresaOp = empresaRepo.findByEmail(email);
+        if(empresaOp.isEmpty()){
+            throw new IllegalArgumentException("Empresa não encontrada");
+        }
+        Empresa empresa = empresaOp.get();
+
+        empresa.setTfaTempoExpiracao((System.currentTimeMillis()/1000) + 120);
+        
+        emailService.sendEmail(email, "Código de Autenticação de Dois Fatores", "\"Você acabou de tentar entrar na sua conta. Seu código de verificação é:  + tfaCode + \nCaso não seja você que acabou de tentar logar, altere sua senha imediatamente.\"");
+    }
 }

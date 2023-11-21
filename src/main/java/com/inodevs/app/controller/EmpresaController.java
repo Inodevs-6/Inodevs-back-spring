@@ -1,6 +1,10 @@
 package com.inodevs.app.controller;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +86,12 @@ public class EmpresaController {
     @GetMapping(value = "/email/{emp_email}")
     public Empresa buscarEmpresaPorEmail(@PathVariable("emp_email") String emp_email) {
         return empresaService.buscarEmpresaPorEmail(emp_email);
+    }
+
+    @PatchMapping(value="/redefinicao-senha/{email}")
+    public ResponseEntity<Object> sendTfaCodeInEmail(@PathVariable("email") String email) throws AddressException, MessagingException {
+        empresaService.emailRedefinicaoSenha(email);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
