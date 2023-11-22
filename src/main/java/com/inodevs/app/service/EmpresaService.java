@@ -1,6 +1,7 @@
 package com.inodevs.app.service;
 
 import java.util.Optional;
+import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -93,6 +94,10 @@ public class EmpresaService{
 
     public void emailRedefinicaoSenha(String email) throws AddressException, MessagingException {
 
+        String tfaCode = String.valueOf(new Random().nextInt(999999 - 100000 + 1) + 100000);
+
+        String link = "http://localhost:5173";
+
         Optional<Empresa> empresaOp = empresaRepo.findByEmail(email);
         if(empresaOp.isEmpty()){
             throw new IllegalArgumentException("Empresa não encontrada");
@@ -101,6 +106,25 @@ public class EmpresaService{
 
         empresa.setTfaTempoExpiracao((System.currentTimeMillis()/1000) + 120);
         
-        emailService.sendEmail(email, "Código de Autenticação de Dois Fatores", "\"Você acabou de tentar entrar na sua conta. Seu código de verificação é:  + tfaCode + \nCaso não seja você que acabou de tentar logar, altere sua senha imediatamente.\"");
+        emailService.sendEmail(email, "Instruções para Redefinição de Senha da Sua Conta", """
+            <h1>Prezado %s</h1> 
+            <p>Esperamos que esta mensagem o encontre bem. Estamos entrando em contato para informar que foi solicitada a redefinição de senha para a sua conta em nosso sistema.</p>
+            </br>
+            <p>Para concluir este processo e garantir a segurança da sua conta, siga as instruções abaixo:</p>
+            <p>1.Acesse o link de redefinição:</p>
+            <a href="%s">link para redefinição</a>
+            <p>2.Informe o código de verificação:</p>
+            <p class=tab>Ao acessar o link acima, você será solicitado a inserir um código de verificação. Utilize o seguinte código: %s</p>
+            </br>
+            <p>Lembre-se de manter sua senha em um local seguro e não compartilhá-la com terceiros. Caso não tenha solicitado a redefinição de senha ou tenha qualquer dúvida, entre em contato conosco imediatamente.</p>
+            <p>Atenciosamente,</p>
+            <p>Suporte</p>
+            <p>Inodevs</p>
+            <p>contato@mail.com</p>""".formatted(empresa.getNome(), link, tfaCode)
+        );
+
+        String tfaCodeEncoded = encoder.encode(tfaCode);
+        empresa.setTfaCodigo(tfaCodeEncoded);
+        empresaRepo.save(empresa);
     }
 }

@@ -40,9 +40,9 @@ public class EmailService {
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(username));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+		message.setContent(text, "text/html; charset=utf-8");
 		
-        message.setSubject("Código de Autenticação de Dois Fatores");
-        message.setText(text);
+        message.setSubject(subject);
         Transport.send(message);
 
         return true;
