@@ -50,6 +50,7 @@ public class EmpresaService{
         newEmpresa.setNome(empresa.getNome());
         newEmpresa.setSegmento(empresa.getSegmento());
         newEmpresa.setPorte(empresa.getPorte());
+        newEmpresa.setTfaAtivado(empresa.getTfaAtivado());;
 
         return empresaRepo.save(newEmpresa);  
     }
