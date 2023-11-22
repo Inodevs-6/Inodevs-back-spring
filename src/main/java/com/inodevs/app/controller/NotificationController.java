@@ -1,7 +1,10 @@
 package com.inodevs.app.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +14,7 @@ import com.inodevs.app.service.NotificationService;
 
 @RestController
 @RequestMapping(value = "/notification")
+@CrossOrigin
 public class NotificationController {
 
     @Autowired
@@ -25,7 +29,5 @@ public class NotificationController {
     public Notification novaNotificacao(@RequestBody Notification notification) {
         return notificationService.novaNotificacao(notification);
     }
-
-    ///notification'/' + type + '/' + name + '/' + level
 
 }

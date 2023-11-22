@@ -1,10 +1,14 @@
 package com.inodevs.app.entity;
 import java.time.LocalDateTime;
+import java.util.Optional;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +19,10 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "emp_id")
+    private Empresa empresa;
     
     @Column(name = "notification_type")
     private String type;
@@ -31,11 +39,12 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(String type, String nome, String nivel, LocalDateTime datetime) {
+    public Notification(String type, String nome, String nivel, LocalDateTime datetime, Empresa empresa) {
         this.type = type;
         this.nome = nome;
         this.nivel = nivel;
         this.datetime = datetime;
+        this.empresa = empresa;
     }
 
     public Long getId() {
@@ -76,6 +85,14 @@ public class Notification {
 
     public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
+    }
+
+    public Empresa getEmpresa() {
+        return this.empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
 }

@@ -45,10 +45,12 @@ create table candidato (
 
 create table notification (
     notification_id bigint unsigned not null auto_increment,
+    emp_id bigint unsigned not null,
     notification_type varchar(15) not null,
     vaga_nome varchar(50) not null,
     vaga_nivel varchar(20) not null,
     notification_datetime datetime,
+    foreign key emp_vaga_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade,
     primary key (notification_id)
 );
 
