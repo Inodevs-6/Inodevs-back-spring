@@ -1,6 +1,13 @@
 package com.inodevs.app.controller;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+import org.apache.coyote.Response;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +33,7 @@ public class NotificationController {
     }
 
     @PostMapping
-    public Notification novaNotificacao(@RequestBody Notification notification) {
+    public Notification novaNotificacao(@RequestBody Notification notification) throws AddressException, MessagingException {
         return notificationService.novaNotificacao(notification);
     }
 

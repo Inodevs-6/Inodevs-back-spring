@@ -41,7 +41,7 @@ public class EmailService {
 		message.setFrom(new InternetAddress(username));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 		
-        message.setSubject("Código de Autenticação de Dois Fatores");
+        message.setSubject(subject);
         message.setText(text);
         Transport.send(message);
 
