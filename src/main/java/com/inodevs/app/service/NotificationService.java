@@ -30,6 +30,22 @@ public class NotificationService {
         return notificationRepo.findAll();
     }
 
+    // public Notification buscarNotPorId(Long emp_id) {
+    //     Optional<Notification> notificationOp = notificationRepo.findById(emp_id);
+    //     if(notificationOp.isEmpty()) {
+    //         throw new IllegalArgumentException("Empresa não possui notificações!");
+    //     }
+    //     return notificationOp.get();
+    // }
+
+    public List<Notification> buscarNotPorId(Long emp_id) {
+        List<Notification> notificationOp = notificationRepo.findNotByEmpresaId(emp_id);
+        if(notificationOp.isEmpty()) {
+            throw new IllegalArgumentException("Empresa não possui notificações!");
+        }
+        return notificationOp;
+    }
+
     //@PreAuthorize("isAuthenticated")
     public Notification novaNotificacao(Notification notification) {
 

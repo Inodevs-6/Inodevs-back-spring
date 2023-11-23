@@ -1,5 +1,6 @@
 package com.inodevs.app.controller;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.inodevs.app.entity.Empresa;
 import com.inodevs.app.entity.Notification;
 import com.inodevs.app.service.NotificationService;
 
@@ -30,6 +33,11 @@ public class NotificationController {
     @GetMapping
     public List<Notification> buscarTodos() {
         return notificationService.buscarTodos();
+    }
+
+    @GetMapping(value = "/{emp_id}")
+    public List<Notification> buscarPorId(@PathVariable("emp_id") Long emp_id) {
+        return notificationService.buscarNotPorId(emp_id);
     }
 
     @PostMapping
