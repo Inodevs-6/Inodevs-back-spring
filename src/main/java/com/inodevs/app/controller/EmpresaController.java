@@ -36,7 +36,6 @@ public class EmpresaController {
         if (!senhaAtendeRequisitos(empresa.getSenha())) {
             throw new SecurityException("A senha não atende aos requisitos mínimos.");
         }
-        
         return empresaService.novaEmpresa(empresa);
     }
 
@@ -44,37 +43,30 @@ public class EmpresaController {
         if (senha.length() < 8) {
             return false;
         }
-
         if (!senha.matches(".*[A-Z].*")) {
             return false;
         }
-
         if (!senha.matches(".*[a-z].*")) {
             return false;
         }
-
         if (!senha.matches(".*\\d.*")) {
             return false;
         }
-
         if (!senha.matches(".*[@#$%^&*()_+{}\":;'<>?].*")) {
             return false;
         }
-
         return true;
     }
 
     @PatchMapping("/editar-empresa/{emp_id}")
     public ResponseEntity<Empresa> editarEmpresa(@PathVariable Long emp_id, @RequestBody Empresa empresa){
         Empresa newEmpresa = empresaService.editarEmpresa(emp_id, empresa);
-
         return ResponseEntity.ok(newEmpresa);
     }
 
     @PatchMapping("/editar-senha/{emp_id}")
     public ResponseEntity<Empresa> editarSenha(@PathVariable Long emp_id, @RequestBody Empresa empresa){
         Empresa newEmpresa = empresaService.editarSenha(emp_id, empresa);
-
         return ResponseEntity.ok(newEmpresa);
     }
 
@@ -92,6 +84,12 @@ public class EmpresaController {
     public ResponseEntity<Object> sendTfaCodeInEmail(@PathVariable("email") String email) throws AddressException, MessagingException {
         empresaService.emailRedefinicaoSenha(email);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PatchMapping("/redefinir-senha/{emp_email}")
+    public ResponseEntity<Empresa> redefinirSenha(@PathVariable String emp_email, @RequestBody Empresa empresa){
+        Empresa newEmpresa = empresaService.redefinirSenha(emp_email, empresa);
+        return ResponseEntity.ok(newEmpresa);
     }
 
 }

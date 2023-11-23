@@ -96,7 +96,7 @@ public class EmpresaService{
 
         String tfaCode = String.valueOf(new Random().nextInt(999999 - 100000 + 1) + 100000);
 
-        String link = "http://localhost:5173";
+        String link = "http://localhost:5173/LoginRedefinicao/" + empresaRepo.findByEmail(email).get().getId();
 
         Optional<Empresa> empresaOp = empresaRepo.findByEmail(email);
         if(empresaOp.isEmpty()){
@@ -126,5 +126,17 @@ public class EmpresaService{
         String tfaCodeEncoded = encoder.encode(tfaCode);
         empresa.setTfaCodigo(tfaCodeEncoded);
         empresaRepo.save(empresa);
+    }
+
+    public Empresa redefinirSenha(String emp_email, Empresa empresa) {
+        Optional<Empresa> empresaOp = empresaRepo.findByEmail(emp_email);
+        if(empresaOp.isEmpty()){
+            throw new IllegalArgumentException("Empresa não encontrada");
+        }
+        Empresa newEmpresa = empresaOp.get();
+
+        newEmpresa.setSenha(encoder.encode(empresa.getSenha()));
+
+        return empresaRepo.save(newEmpresa);  
     }
 }
