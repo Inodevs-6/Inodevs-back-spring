@@ -24,9 +24,8 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
-    @PostMapping("/nova-empresa")
+    @PostMapping
     public Empresa novaEmpresa(@RequestBody Empresa empresa) {
-        empresa.setTfaAtivado(true);
 
         // Verifique a senha da empresa
         if (!senhaAtendeRequisitos(empresa.getSenha())) {
