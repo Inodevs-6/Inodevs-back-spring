@@ -50,7 +50,7 @@ create table notification (
     vaga_nome varchar(50) not null,
     vaga_nivel varchar(20) not null,
     notification_datetime datetime,
-    foreign key emp_vaga_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade,
+    foreign key emp_vaga_notificication_fk (emp_id) references empresa (emp_id) on delete restrict on update cascade,
     primary key (notification_id)
 );
 
