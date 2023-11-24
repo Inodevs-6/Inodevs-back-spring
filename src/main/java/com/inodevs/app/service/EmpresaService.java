@@ -128,8 +128,8 @@ public class EmpresaService{
         empresaRepo.save(empresa);
     }
 
-    public Empresa redefinirSenha(String emp_email, Empresa empresa) {
-        Optional<Empresa> empresaOp = empresaRepo.findByEmail(emp_email);
+    public Empresa redefinirSenha(Long emp_id, Empresa empresa) {
+        Optional<Empresa> empresaOp = empresaRepo.findById(emp_id);
         if(empresaOp.isEmpty()){
             throw new IllegalArgumentException("Empresa não encontrada");
         }
@@ -138,5 +138,17 @@ public class EmpresaService{
         newEmpresa.setSenha(encoder.encode(empresa.getSenha()));
 
         return empresaRepo.save(newEmpresa);  
+    }
+
+    public boolean verificarCodigo(Long id, String codigo) {
+        Optional<Empresa> empresaOp = empresaRepo.findByIdAndTfaTempoExpiracaoGreaterThanEqual(id, System.currentTimeMillis()/1000);
+        if(empresaOp.isEmpty()){
+            return false;
+        }
+        Empresa empresa = empresaOp.get();
+        if (!encoder.matches(codigo, empresa.getTfaCodigo())){
+            return false;
+        }
+        return true;
     }
 }
