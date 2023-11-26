@@ -25,7 +25,10 @@ public class NotificationService {
     @Autowired
     private EmpresaRepository empresaRepo;
 
-    //@PreAuthorize("isAuthenticated")
+    @Autowired
+    private EmailService emailService;
+
+    @PreAuthorize("isAuthenticated")
     public List<Notification> buscarTodos() {
         return notificationRepo.findAll();
     }
@@ -38,6 +41,7 @@ public class NotificationService {
     //     return notificationOp.get();
     // }
 
+    @PreAuthorize("isAuthenticated")
     public List<Notification> buscarNotPorId(Long emp_id) {
         List<Notification> notificationOp = notificationRepo.findNotByEmpresaId(emp_id);
         if(notificationOp.isEmpty()) {
@@ -46,8 +50,8 @@ public class NotificationService {
         return notificationOp;
     }
 
-    //@PreAuthorize("isAuthenticated")
-    public Notification novaNotificacao(Notification notification) {
+    @PreAuthorize("isAuthenticated")
+    public Notification novaNotificacao(Notification notification) throws AddressException, MessagingException {
 
         if (notification == null ||
                 notification.getType() == null ||
@@ -65,6 +69,15 @@ public class NotificationService {
  
         notification.setDatetime(LocalDateTime.now());
         notification.setEmpresa(empresa.get());
+
+        String type = notification.getType();
+
+        if (type.equals("Request")){
+            emailService.sendEmail(empresa.get().getEmail(), "Geração da descrição CHA concluída!", "A descrição CHA foi gerada com sucesso para o cargo " + notification.getNome() + " com o nível requerido de " + notification.getNivel());
+        }
+        else {
+            emailService.sendEmail(empresa.get().getEmail(), "Match de candidados concluída!", "Os 8 melhores candidatos foram encontrados com sucesso para o cargo " + notification.getNome() + " com o nível requerido de " + notification.getNivel());
+        }
         
         return notificationRepo.save(notification);
     }

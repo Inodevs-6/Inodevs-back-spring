@@ -94,8 +94,8 @@ public class EmpresaController {
     }
 
     @PostMapping(value="/tfaverificar") 
-	public ResponseEntity<Object> verificarCodigo(@RequestBody Long id, String codigo) throws JsonProcessingException {
-        boolean isValid = empresaService.verificarCodigo(id, codigo);
+	public ResponseEntity<Object> verificarCodigo(@RequestBody Empresa empresa) throws JsonProcessingException {
+        boolean isValid = empresaService.verificarCodigo(empresa.getId(), empresa.getTfaCodigo());
 		if(!isValid) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Codigo invalido!");
         }
