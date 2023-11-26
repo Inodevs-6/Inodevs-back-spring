@@ -38,6 +38,7 @@ public class EmpresaService{
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }               
         empresa.setSenha(encoder.encode(empresa.getSenha()));
+        empresa.setTfaAtivado(true);
         return empresaRepo.save(empresa);
             
     }
@@ -57,6 +58,7 @@ public class EmpresaService{
         newEmpresa.setNome(empresa.getNome());
         newEmpresa.setSegmento(empresa.getSegmento());
         newEmpresa.setPorte(empresa.getPorte());
+        newEmpresa.setTfaAtivado(empresa.getTfaAtivado());;
 
         return empresaRepo.save(newEmpresa);  
     }

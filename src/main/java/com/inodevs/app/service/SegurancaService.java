@@ -56,7 +56,7 @@ public class SegurancaService implements UserDetailsService{
 
         empresa.setTfaTempoExpiracao((System.currentTimeMillis()/1000) + 120);
         
-        emailService.sendEmail(email, "Código de Autenticação de Dois Fatores", "\"Você acabou de tentar entrar na sua conta. Seu código de verificação é: " + tfaCode + "\nCaso não seja você que acabou de tentar logar, altere sua senha imediatamente.\"");
+        emailService.sendEmail(email, "Código de Autenticação de Dois Fatores", "Você acabou de tentar entrar na sua conta. Seu código de verificação é: " + tfaCode + "\nCaso não seja você que acabou de tentar logar, altere sua senha imediatamente.");
 
         String tfaCodeEncoded = encoder.encode(tfaCode);
         empresa.setTfaCodigo(tfaCodeEncoded);

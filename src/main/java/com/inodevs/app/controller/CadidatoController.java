@@ -21,4 +21,5 @@ public class CadidatoController {
     public List<Candidato> buscarTodos() {
         return candidatoService.buscarTodos();
     }
+               
 }

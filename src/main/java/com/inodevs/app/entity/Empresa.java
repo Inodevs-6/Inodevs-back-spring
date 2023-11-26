@@ -56,6 +56,18 @@ public class Empresa {
     @JsonIgnore
     private List<EmpresaVaga> vagas;
 
+    @OneToMany(mappedBy = "empresa")
+    @JsonIgnore
+    private List<Notification> notificacoes;
+
+    public List<Notification> getNotificacoes() {
+        return notificacoes;
+    }
+
+    public void setNotificacoes(List<Notification> notificacoes) {
+        this.notificacoes = notificacoes;
+    }
+
     @Column(name = "emp_tfa_ativado")
     private Boolean tfaAtivado;
 
