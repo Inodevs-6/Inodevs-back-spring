@@ -40,9 +40,9 @@ public class EmailService {
 		MimeMessage message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(username));
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+		message.setContent(text, "text/html; charset=utf-8");
 		
         message.setSubject(subject);
-        message.setText(text);
         Transport.send(message);
 
         return true;
