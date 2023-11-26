@@ -1,6 +1,10 @@
 package com.inodevs.app.service;
 
 import java.util.Optional;
+import java.util.Random;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +23,9 @@ public class EmpresaService{
     @Autowired
     private EmpresaRepository empresaRepo;
 
+    @Autowired
+    private EmailService emailService;
+
     public Empresa novaEmpresa (Empresa empresa) {
   
         if(empresa == null ||
@@ -31,6 +38,7 @@ public class EmpresaService{
             throw new IllegalArgumentException("Os campos obrigatórios não foram preenchidos!");
         }               
         empresa.setSenha(encoder.encode(empresa.getSenha()));
+        empresa.setTfaAtivado(true);
         return empresaRepo.save(empresa);
             
     }
@@ -50,6 +58,7 @@ public class EmpresaService{
         newEmpresa.setNome(empresa.getNome());
         newEmpresa.setSegmento(empresa.getSegmento());
         newEmpresa.setPorte(empresa.getPorte());
+        newEmpresa.setTfaAtivado(empresa.getTfaAtivado());;
 
         return empresaRepo.save(newEmpresa);  
     }
@@ -84,5 +93,64 @@ public class EmpresaService{
         }
         return empresaOp.get();
     }
-    
+
+    public void emailRedefinicaoSenha(String email) throws AddressException, MessagingException {
+
+        String tfaCode = String.valueOf(new Random().nextInt(999999 - 100000 + 1) + 100000);
+
+        String link = "http://localhost:5173/LoginRedefinicao/" + empresaRepo.findByEmail(email).get().getId();
+
+        Optional<Empresa> empresaOp = empresaRepo.findByEmail(email);
+        if(empresaOp.isEmpty()){
+            throw new IllegalArgumentException("Empresa não encontrada");
+        }
+        Empresa empresa = empresaOp.get();
+
+        empresa.setTfaTempoExpiracao((System.currentTimeMillis()/1000) + 120);
+        
+        emailService.sendEmail(email, "Instruções para Redefinição de Senha da Sua Conta", """
+            <h1>Prezado %s</h1> 
+            <p>Esperamos que esta mensagem o encontre bem. Estamos entrando em contato para informar que foi solicitada a redefinição de senha para a sua conta em nosso sistema.</p>
+            </br>
+            <p>Para concluir este processo e garantir a segurança da sua conta, siga as instruções abaixo:</p>
+            <p>1.Acesse o link de redefinição:</p>
+            <a href="%s">link para redefinição</a>
+            <p>2.Informe o código de verificação:</p>
+            <p class=tab>Ao acessar o link acima, você será solicitado a inserir um código de verificação. Utilize o seguinte código: %s</p>
+            </br>
+            <p>Lembre-se de manter sua senha em um local seguro e não compartilhá-la com terceiros. Caso não tenha solicitado a redefinição de senha ou tenha qualquer dúvida, entre em contato conosco imediatamente.</p>
+            <p>Atenciosamente,</p>
+            <p>Suporte</p>
+            <p>Inodevs</p>
+            <p>contato@mail.com</p>""".formatted(empresa.getNome(), link, tfaCode)
+        );
+
+        String tfaCodeEncoded = encoder.encode(tfaCode);
+        empresa.setTfaCodigo(tfaCodeEncoded);
+        empresaRepo.save(empresa);
+    }
+
+    public Empresa redefinirSenha(Long emp_id, Empresa empresa) {
+        Optional<Empresa> empresaOp = empresaRepo.findById(emp_id);
+        if(empresaOp.isEmpty()){
+            throw new IllegalArgumentException("Empresa não encontrada");
+        }
+        Empresa newEmpresa = empresaOp.get();
+
+        newEmpresa.setSenha(encoder.encode(empresa.getSenha()));
+
+        return empresaRepo.save(newEmpresa);  
+    }
+
+    public boolean verificarCodigo(Long id, String codigo) {
+        Optional<Empresa> empresaOp = empresaRepo.findByIdAndTfaTempoExpiracaoGreaterThanEqual(id, System.currentTimeMillis()/1000);
+        if(empresaOp.isEmpty()){
+            return false;
+        }
+        Empresa empresa = empresaOp.get();
+        if (!encoder.matches(codigo, empresa.getTfaCodigo())){
+            return false;
+        }
+        return true;
+    }
 }
